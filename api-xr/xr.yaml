@@ -1,0 +1,26 @@
+apiVersion: aws.moonorb.com/v1alpha1
+kind: XEKS
+metadata:
+  name: sandbox-eksauto
+spec:
+  crossplane:
+    compositionRef:
+      name: xeksauto.aws.moonorb.com
+  parameters:
+    id: sandbox-eksauto
+    region: us-east-1
+    version: "1.33"
+    iam:
+      roleArn: arn:aws:iam::471112925754:role/CustomAdminRole # Entr your Admin Role
+    providerConfigName: non-default
+    subnetIds: ["subnet-098f5b6d25779ee45", "subnet-0c38209d3da12be16", "subnet-058b7c6e871cb474e"]  # Enter your subnets
+    additionalCidrIpv4: 
+      - 172.31.0.0/16 # Enter your VPC CIDR
+#    publicAccessCidrs: ["1.2.3.4/24"] # Enter your Public IP If you want to access this cluster via kubectl from a remote network
+    endpointPrivateAccess: false
+    endpointPublicAccess: true
+    tags:
+      admin_contact: moonorb@gmail.com
+      service_data: env=test
+      service_id: SANDBOX
+      karpenter.sh/discovery: sandbox-eksauto
